@@ -4,7 +4,6 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.http.response import HttpResponse
 from ..services import listado_estudiantes
-import json
 
 
 class EstudiantesView(View):
@@ -20,4 +19,3 @@ class EstudiantesView(View):
     # * En post si que requiero
     def post(self, request):
         return 1
-
