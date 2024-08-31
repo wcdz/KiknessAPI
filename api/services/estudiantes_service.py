@@ -1,6 +1,6 @@
-from ..models import ViewEstudiantes, Estudiantes
-from django.db.models import Q
 from django.http.response import JsonResponse
+from django.db.models import Q
+from ..models import ViewEstudiantes, Estudiantes
 
 def listado_estudiantes(request):
     # Obtener todos los parámetros de la solicitud
