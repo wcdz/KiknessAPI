@@ -9,3 +9,5 @@ La base de datos se crea con utf8_unicode_ci
 
 
 deberas hacer el tema de la instalacion o fijate en el tema de requeriments.txt
+
+python manage.py runserver
