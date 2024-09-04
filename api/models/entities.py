@@ -60,7 +60,7 @@ class Estudiantes(models.Model):
     )
 
     def __str__(self):
-        return self.id_estudiante
+        return self
 
 
 class AuditoriaIngresos(models.Model):

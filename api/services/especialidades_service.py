@@ -1,4 +1,3 @@
-from django.http.response import JsonResponse
 from ..models import Especialidades
 
 """ Una condicion de la especialidad es que siempre se tendra que filtrar por ambos queryparams 
@@ -21,4 +20,4 @@ def listado_especialidades(request):
     else:
         especialidades = []
 
-    return JsonResponse(especialidades, safe=False)
+    return especialidades
