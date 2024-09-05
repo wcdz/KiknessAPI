@@ -4,7 +4,7 @@ from ..helpers import (
     get_id_by_name_nivel_academico,
     get_id_by_name_facultad,
     get_id_by_ids_naf_name_especialidad,
-    cod_estudiante_exits,
+    cod_estudiante_exist,
 )
 import json
 
@@ -61,7 +61,7 @@ def insertar_estudiante(request):
         }
 
     # * Validacion de que no exista un registro con el mismo codigo de estudiante
-    estudiante_exists = cod_estudiante_exits(cod_estudiante)
+    estudiante_exists = cod_estudiante_exist(cod_estudiante)
     if estudiante_exists:
         return {
             "status": False,

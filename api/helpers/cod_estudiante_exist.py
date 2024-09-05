@@ -1,7 +1,7 @@
 from django.http import HttpRequest
 
 
-def cod_estudiante_exits(cod_estudiante):
+def cod_estudiante_exist(cod_estudiante):
     from ..services import listado_estudiantes
 
     request = HttpRequest()
