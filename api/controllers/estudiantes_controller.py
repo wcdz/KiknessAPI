@@ -3,7 +3,8 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.http.response import HttpResponse
-from ..services import listado_estudiantes
+from ..services import listado_estudiantes, insertar_estudiante
+from django.http.response import JsonResponse
 
 
 class EstudiantesView(View):
@@ -14,8 +15,10 @@ class EstudiantesView(View):
 
     # * En get solo necesito manejar la view de bd mas no la data en crudo
     def get(self, request):
-        return listado_estudiantes(request)
+        _listado_estudiantes = listado_estudiantes(request)
+        return JsonResponse(_listado_estudiantes, safe=False)
 
     # * En post si que requiero
     def post(self, request):
-        return 1
+        create_estudiante = insertar_estudiante(request)
+        return JsonResponse(create_estudiante, status=201, safe=False)

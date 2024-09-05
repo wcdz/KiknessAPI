@@ -4,6 +4,7 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.http.response import HttpResponse
 from ..services import listado_niveles_academicos
+from django.http.response import JsonResponse
 
 
 class NivelesAcademicosView(View):
@@ -13,4 +14,4 @@ class NivelesAcademicosView(View):
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request):
-        return listado_niveles_academicos(request)
+        return JsonResponse(listado_niveles_academicos(request),safe=False)

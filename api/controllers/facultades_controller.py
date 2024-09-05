@@ -4,6 +4,7 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.http.response import HttpResponse
 from ..services import listado_facultades
+from django.http.response import JsonResponse
 
 
 class FacultadesView(View):
@@ -13,4 +14,5 @@ class FacultadesView(View):
         return super().dispatch(request, *args, **kwargs)
 
     def get(self, request):
-        return listado_facultades(request)
+        _listado_facultades = listado_facultades(request)
+        return JsonResponse(_listado_facultades, safe=False)

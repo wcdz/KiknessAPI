@@ -4,6 +4,7 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.http.response import HttpResponse
 from ..services import listado_especialidades
+from django.http.response import JsonResponse
 
 
 class EspecialidadesView(View):
@@ -12,6 +13,6 @@ class EspecialidadesView(View):
     def dispatch(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         return super().dispatch(request, *args, **kwargs)
 
-    # * En get solo necesito manejar la view de bd mas no la data en crudo
     def get(self, request):
-        return listado_especialidades(request)
+        _listado_especialidades = listado_especialidades(request)
+        return JsonResponse(_listado_especialidades, safe=False)
