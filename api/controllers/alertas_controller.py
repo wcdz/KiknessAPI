@@ -3,7 +3,8 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.http.response import HttpResponse
-from ..services import listado_alertas
+from ..services import listado_alertas, insertar_alerta
+from django.http import JsonResponse
 
 
 class AlertasView(View):
@@ -14,4 +15,9 @@ class AlertasView(View):
 
     # * En get solo necesito manejar la view de bd mas no la data en crudo
     def get(self, request):
-        return listado_alertas(request)
+        _listado_alertas = listado_alertas(request)
+        return JsonResponse(_listado_alertas, safe=False)
+
+    def post(self, request):
+        create_alerta = insertar_alerta(request)
+        return JsonResponse(create_alerta, safe=False)
