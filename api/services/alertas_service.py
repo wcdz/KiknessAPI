@@ -1,5 +1,6 @@
 from django.db.models import Q
 from ..models import Alertas
+from ..helpers import register_send_mails
 import datetime as dt
 
 
@@ -35,6 +36,10 @@ def insertar_alerta(request):
     nueva_alerta = Alertas.objects.create(
         fecha_alerta=fecha_actual, hora_alerta=hora_alerta, foto_captura=foto_captura
     )
+
+    # * Validar que se genera la alerta para generar la tabla intermedia de envio de alertas
+    if nueva_alerta:
+        register_send_mails(nueva_alerta)
 
     data = {
         "fecha_alerta": fecha_actual,

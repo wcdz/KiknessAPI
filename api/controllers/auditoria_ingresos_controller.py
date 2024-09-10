@@ -3,7 +3,8 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.http.response import HttpResponse
-from ..services import listados_auditoria_ingresos
+from ..services import listados_auditoria_ingresos, insert_auditoria_ingreso
+from django.http.response import JsonResponse
 
 
 class AuditoriaIngresosView(View):
@@ -14,4 +15,9 @@ class AuditoriaIngresosView(View):
 
     # * En get solo necesito manejar la view de bd mas no la data en crudo
     def get(self, request):
-        return listados_auditoria_ingresos(request)
+        _listados_auditoria_ingresos = listados_auditoria_ingresos(request)
+        return JsonResponse(_listados_auditoria_ingresos, safe=False)
+
+    def post(self, request):
+        create_auditoria_ingreso = insert_auditoria_ingreso(request)
+        return JsonResponse(create_auditoria_ingreso, status=201, safe=False)

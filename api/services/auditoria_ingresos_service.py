@@ -1,4 +1,3 @@
-from django.http.response import JsonResponse
 from django.db.models import Q
 from ..models import AuditoriaIngresos
 
@@ -14,4 +13,8 @@ def listados_auditoria_ingresos(request):
         filtros &= Q(fecha_ingreso__lte=fecha_fin)
 
     auditoria_ingresos = list(AuditoriaIngresos.objects.filter(filtros).values())
-    return JsonResponse(auditoria_ingresos, safe=False)
+    return auditoria_ingresos
+
+
+def insert_auditoria_ingreso(request):
+    return request

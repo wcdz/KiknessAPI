@@ -20,4 +20,4 @@ class AlertasView(View):
 
     def post(self, request):
         create_alerta = insertar_alerta(request)
-        return JsonResponse(create_alerta, safe=False)
+        return JsonResponse(create_alerta, status=201, safe=False)

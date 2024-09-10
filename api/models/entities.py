@@ -87,7 +87,7 @@ class Alertas(models.Model):
     )
 
     def __str__(self):
-        return self.id_alerta
+        return str(self.id_alerta)
 
 
 class Usuarios(models.Model):
