@@ -109,3 +109,13 @@ def insertar_estudiante(request):
     }
 
     return _nuevo_estudiante
+
+
+def delete_estudiante(request):
+    cod_estudiante = request.GET.get("cod_estudiante", "").strip()
+    estudiante = Estudiantes.objects.get(cod_estudiante=cod_estudiante)
+    estudiante.estado_estudiante = 0
+    estudiante.save()
+    response = {"message": f"Estudiante con codigo {cod_estudiante} desactivado"}
+
+    return response

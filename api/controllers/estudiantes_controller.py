@@ -3,7 +3,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.http.response import HttpResponse
-from ..services import listado_estudiantes, insertar_estudiante
+from ..services import listado_estudiantes, insertar_estudiante, delete_estudiante
 from django.http.response import JsonResponse
 
 
@@ -22,3 +22,12 @@ class EstudiantesView(View):
     def post(self, request):
         create_estudiante = insertar_estudiante(request)
         return JsonResponse(create_estudiante, status=201, safe=False)
+    
+    # * Solo podra actualizar perfil y captura biometrica
+    def put():
+        return 
+    
+    # * A modo de update para status
+    def delete(self, request):
+        _delete_estudiante = delete_estudiante(request)
+        return JsonResponse(_delete_estudiante, safe=False)
