@@ -3,7 +3,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.http.response import HttpResponse
-from ..services import listado_alertas, insertar_alerta
+from ..services import listado_alertas, insertar_alerta, actualizar_alerta
 from django.http import JsonResponse
 
 
@@ -21,3 +21,7 @@ class AlertasView(View):
     def post(self, request):
         create_alerta = insertar_alerta(request)
         return JsonResponse(create_alerta, status=201, safe=False)
+
+    def put(self, request):
+        update_alerta = actualizar_alerta(request)
+        return JsonResponse(update_alerta, safe=False)

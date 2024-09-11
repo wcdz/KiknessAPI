@@ -2,6 +2,9 @@ from django.db.models import Q
 from ..models import Alertas
 from ..helpers import register_send_mails
 import datetime as dt
+import json
+from ..models import ViewEstudiantes, Estudiantes
+from ..helpers import cod_estudiante_exist
 
 
 def listado_alertas(request):
@@ -48,3 +51,34 @@ def insertar_alerta(request):
     }
 
     return data
+
+
+def actualizar_alerta(request):
+    rq = json.loads(request.body)
+    id_alerta = request.GET.get("id_alerta")
+    cod_estudiante = rq.get("cod_estudiante")
+    detalle_alerta = rq.get("detalle_alerta")
+    estado_alerta = rq.get("estado_alerta")
+
+    estudiante_exists = cod_estudiante_exist(cod_estudiante)
+    if not estudiante_exists:
+        return {
+            "status": False,
+            "message": f"No existe un registro con codigo {cod_estudiante}",
+        }
+
+    # obtener el id de estudiante por el codigo de estudiante
+    estudiante = Estudiantes.objects.get(cod_estudiante=cod_estudiante)
+    alerta = Alertas.objects.get(id_alerta=id_alerta)
+
+    # Actualizacion de la alerta
+    alerta.id_estudiante = estudiante
+    if detalle_alerta:
+        alerta.detalle_alerta = detalle_alerta
+    if isinstance(estado_alerta, int):
+        alerta.estado_alerta = estado_alerta
+
+    alerta.save()
+
+    response = f"Alerta con id {id_alerta} actualizada"
+    return response
