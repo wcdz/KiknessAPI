@@ -1,6 +1,7 @@
 from django.db.models import Q
-from ..models import AuditoriaIngresos
-
+from ..models import AuditoriaIngresos, Estudiantes
+import json
+import datetime as dt
 
 def listados_auditoria_ingresos(request):
     fecha_inicio = request.GET.get("fecha_inicio", "").strip()
@@ -17,4 +18,17 @@ def listados_auditoria_ingresos(request):
 
 
 def insert_auditoria_ingreso(request):
-    return request
+    rq = json.loads(request.body)
+    id_estudiante = rq.get("id_estudiante")
+    fecha_ingreso = dt.date.today()
+    hora_ingreso = dt.datetime.now().time().strftime("%H:%M:%S")
+    
+    estudiante = Estudiantes.objects.get(id_estudiante=id_estudiante)
+    
+    auditoria_ingreso = AuditoriaIngresos.objects.create(
+        fecha_ingreso=fecha_ingreso,
+        hora_ingreso=hora_ingreso,
+        id_estudiante=estudiante
+    )
+    
+    return {"status": True, "message": "Se registro un acceso"}

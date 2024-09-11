@@ -23,14 +23,16 @@ def listado_estudiantes(request):
         ).strip(),
     }
 
-    # Obtener los valores para los campos que requieren OR
-    nombres_estudiante = request.GET.get("nombres_estudiante", "").strip()
-    apellidos_estudiante = request.GET.get("nombres_estudiante", "").strip()
+    # Obtener el valor para el campo id_estudiante (numérico)
+    id_estudiante = request.GET.get("id_estudiante", "").strip()
 
     # Crear el queryset base
     estudiantes = ViewEstudiantes.objects.filter(estado_estudiante="1")
 
     # Crear filtros OR para nombres y apellidos
+    nombres_estudiante = request.GET.get("nombres_estudiante", "").strip()
+    apellidos_estudiante = request.GET.get("nombres_estudiante", "").strip()
+
     if nombres_estudiante or apellidos_estudiante:
         q_objects = Q()
         if nombres_estudiante:
@@ -38,6 +40,10 @@ def listado_estudiantes(request):
         if apellidos_estudiante:
             q_objects |= Q(apellidos_estudiante__icontains=apellidos_estudiante)
         estudiantes = estudiantes.filter(q_objects)
+
+    # Aplicar filtro para id_estudiante si es un número
+    if id_estudiante.isdigit():
+        estudiantes = estudiantes.filter(id_estudiante=id_estudiante)
 
     # Aplicar filtros restantes
     filtros_activos = {campo: valor for campo, valor in filtros.items() if valor}
